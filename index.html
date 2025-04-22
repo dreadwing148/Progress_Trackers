@@ -345,20 +345,31 @@
     </span></li>
   </ul>
 
-  <script>
-    // JavaScript to save progress in local storage
-    document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
-      checkbox.addEventListener('change', function () {
-        const checkboxId = this.id || (this.id = 'checkbox-' + Math.random().toString(36).substring(2, 9));
-        localStorage.setItem(checkboxId, this.checked);
+<script>
+    // Function to save the state of checkboxes to localStorage
+    function saveProgress() {
+      const checkboxes = document.querySelectorAll('.progress-checkbox');
+      checkboxes.forEach(checkbox => {
+        localStorage.setItem(checkbox.id, checkbox.checked);
       });
+    }
 
-      // On page load, check if any boxes are checked from local storage
-      const checkboxId = checkbox.id || (checkbox.id = 'checkbox-' + Math.random().toString(36).substring(2, 9));
-      if (localStorage.getItem(checkboxId) === 'true') {
-        checkbox.checked = true;
-      }
+    // Function to load the state of checkboxes from localStorage
+    function loadProgress() {
+      const checkboxes = document.querySelectorAll('.progress-checkbox');
+      checkboxes.forEach(checkbox => {
+        const isChecked = localStorage.getItem(checkbox.id) === 'true';
+        checkbox.checked = isChecked;
+      });
+    }
+
+    // Listen for changes to the checkboxes
+    document.querySelectorAll('.progress-checkbox').forEach(checkbox => {
+      checkbox.addEventListener('change', saveProgress);
     });
+
+    // Load the saved progress when the page loads
+    loadProgress();
   </script>
 </body>
 </html>
